@@ -1,4 +1,5 @@
 export { default as Login } from './Login';
+export { default as Search } from './Search';
 
 import React, { Component } from 'react';
 import {

@@ -1,8 +1,11 @@
 import { StackNavigator } from 'react-navigation';
-import { Login } from '../components';
+import { Login, Search } from '../components';
 
 export const AppScreens = StackNavigator({
   Login: {
     screen: Login
+  },
+  Search: {
+    screen: Search
   }
 });
