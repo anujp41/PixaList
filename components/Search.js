@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  TextInput,
   Text,
-  View
+  View,
+  TouchableHighlight
 } from 'react-native';
-import { SearchBar } from 'react-native-elements'
 
 
 class Search extends Component {
   render() {
     return (
-      <SearchBar
-        noIcon
-        round
-        placeholder="Seach for that perfect picture..."
-      />
+      <View >
+        <TextInput
+          style={styles.instructions}
+          placeholder="Search for that picture...."
+        />
+        <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={this.onPress}>
+          <Text style={styles.buttonText}>Search PixaBay</Text>
+        </TouchableHighlight>
+      </View>
     );
   }
 }
@@ -22,20 +27,27 @@ class Search extends Component {
 export default Search;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
   instructions: {
+    marginTop: 25,
+    height: 25,
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    borderBottomWidth: 1
   },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    marginTop: 25,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  }
 });
