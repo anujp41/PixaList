@@ -9,12 +9,21 @@ import {
 
 
 class Search extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      search: ''
+    }
+  }
   render() {
+    console.log('my state ', this.state.search)
     return (
       <View >
         <TextInput
           style={styles.instructions}
           placeholder="Search for that picture...."
+          onChangeText={(search) => this.setState({search})}
         />
         <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={this.onPress}>
           <Text style={styles.buttonText}>Search PixaBay</Text>
