@@ -6,14 +6,16 @@ import {
   Platform,
   View
 } from 'react-native';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import { AppScreens } from '../navigation/router';
-// import store from '../store';
+import store from '../store';
 
 export default class App extends Component {
   render() {
     return (
-      <AppScreens />
+      <Provider store={store}>
+        <AppScreens />
+      </Provider>
     );
   }
 }

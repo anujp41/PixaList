@@ -7,7 +7,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getResultThunk } from '../store/result';
+import { getResultThunk } from '../store';
 
 class Search extends Component {
 
@@ -16,11 +16,15 @@ class Search extends Component {
     this.state = {
       search: ''
     }
+    this.onPress = this.onPress.bind(this);
   }
 
+  onPress() {
+    const search = this.state.search;
+    this.props.getResult(search);
+  }
 
   render() {
-    console.log('my state ', this.state.search)
     return (
       <View >
         <TextInput
@@ -36,18 +40,17 @@ class Search extends Component {
   }
 }
 
-export default Search;
+const mapDispatch = dispatch => {
+  return {
+    getResult: search => {
+      const action = getResultThunk(search);
+      dispatch(action);
+    }
+  }
+}
 
-// const mapDispatch = dispatch => {
-//   return {
-//     getResult: search => {
-//       const action = getResultThunk(search);
-//       dispatch(action);
-//     }
-//   }
-// }
-
-// const mapDispatch = connect()
+const SearchContainer = connect(null, mapDispatch)(Search);
+export default SearchContainer;
 
 const styles = StyleSheet.create({
   instructions: {
