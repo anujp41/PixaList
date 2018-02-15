@@ -6,7 +6,8 @@ import {
   View,
   TouchableHighlight
 } from 'react-native';
-
+import { connect } from 'react-redux';
+import { getResultThunk } from '../store/result';
 
 class Search extends Component {
 
@@ -16,6 +17,8 @@ class Search extends Component {
       search: ''
     }
   }
+
+
   render() {
     console.log('my state ', this.state.search)
     return (
@@ -34,6 +37,17 @@ class Search extends Component {
 }
 
 export default Search;
+
+// const mapDispatch = dispatch => {
+//   return {
+//     getResult: search => {
+//       const action = getResultThunk(search);
+//       dispatch(action);
+//     }
+//   }
+// }
+
+// const mapDispatch = connect()
 
 const styles = StyleSheet.create({
   instructions: {
