@@ -5,7 +5,8 @@ import {
   Text,
   ActivityIndicator,
   Image,
-  FlatList
+  FlatList,
+  TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -17,12 +18,19 @@ class Images extends Component {
     this._renderWait = this._renderWait.bind(this);
     this.keyExtractor = this.keyExtractor.bind(this);
     this._renderItem = this._renderItem.bind(this);
+    this.onPress = this.onPress.bind(this);
   }
+
+  onPress = image => console.log('i am pressed image', image)
 
   keyExtractor = image => image.id;
 
   _renderItem = ({item}) => {
-    return <Image source={{uri: item.previewURL}} style={{width: 150, height: 150}}/>
+    return (
+      <TouchableHighlight onPress={() => this.onPress(item)}>
+        <Image source={{uri: item.previewURL}} style={styles.image}/>
+      </TouchableHighlight>
+    )
   }
 
   _renderImages(images) {
@@ -47,9 +55,7 @@ class Images extends Component {
   }
 
   render() {
-    // console.log('original ', this.props.images)
-    const images = JSON.parse(JSON.stringify(this.props.images));
-    // console.log('these are ', images)
+    const images = this.props.images;
     return (
       <View style={styles.container}>
         {images.length 
@@ -76,9 +82,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  image: {
+    height: 150,
+    width: 150
   },
 });
