@@ -1,3 +1,5 @@
+'use strict';
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -9,6 +11,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
+import ImageDetailModal from './ImageDetailModal';
 
 class Images extends Component {
 
@@ -18,16 +21,26 @@ class Images extends Component {
     this._renderWait = this._renderWait.bind(this);
     this.keyExtractor = this.keyExtractor.bind(this);
     this._renderItem = this._renderItem.bind(this);
-    this.onPress = this.onPress.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+    this.state = {
+      showModal: false,
+      image: ''
+    }
   }
 
-  onPress = image => console.log('i am pressed image', image)
+  toggleModal = image => {
+    if (image === undefined) image = ''
+    this.setState({
+      image ,
+      showModal: !this.state.showModal,
+    })
+  }
 
   keyExtractor = image => image.id;
 
   _renderItem = ({item}) => {
     return (
-      <TouchableHighlight onPress={() => this.onPress(item)}>
+      <TouchableHighlight onPress={() => this.toggleModal(item)}>
         <Image source={{uri: item.previewURL}} style={styles.image}/>
       </TouchableHighlight>
     )
@@ -61,6 +74,7 @@ class Images extends Component {
         {images.length 
         ? this._renderImages(images)
         : this._renderWait()}
+        <ImageDetailModal visible={this.state.showModal} toggleModal={this.toggleModal} image={this.state.image} />
       </View>
     )
   }
