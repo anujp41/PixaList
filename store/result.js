@@ -6,20 +6,21 @@ const GET_RESULTS = 'GET_RESULTS';
 let result = [];
 
 const getResult = result => {
-  const action = { type: GET_RESULTS, result };
+  const images = result.hits;
+  const action = { type: GET_RESULTS, images };
   return action;
 }
 
 export const getResultThunk = searchItem => dispatch => {
-  console.log('bay ', pixabayKey)
-  axios.get(`https://pixabay.com/api/?key=${pixabayKey}&q=${searchItem}&image_type=photo`)
+  const search = searchItem.replace(' ', '+');
+  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo`)
   .then(result => dispatch(getResult(result.data)))
 }
 
 export default (state = result, action) => {
   switch (action.type) {
     case GET_RESULTS:
-      return action.result
+      return action.images
 
     default:
       return state;

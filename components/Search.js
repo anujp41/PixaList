@@ -22,6 +22,7 @@ class Search extends Component {
   onPress() {
     const search = this.state.search;
     this.props.getResult(search);
+    this.props.navigation.navigate('Images');
   }
 
   render() {

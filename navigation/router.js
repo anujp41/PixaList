@@ -1,5 +1,5 @@
 import { StackNavigator } from 'react-navigation';
-import { Login, Search } from '../components';
+import { Login, Search, Images } from '../components';
 
 export const AppScreens = StackNavigator({
   Login: {
@@ -7,5 +7,8 @@ export const AppScreens = StackNavigator({
   },
   Search: {
     screen: Search
+  },
+  Images: {
+    screen: Images
   }
 });
