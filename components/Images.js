@@ -38,13 +38,18 @@ class Images extends Component {
   }
 
   _renderWait() {
-    return <ActivityIndicator size="large" color="#0000ff" />
+    return (
+      <View>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Fetching Images...</Text>
+      </View>
+    )
   }
 
   render() {
-    console.log('original ', this.props.images)
+    // console.log('original ', this.props.images)
     const images = JSON.parse(JSON.stringify(this.props.images));
-    console.log('these are ', images)
+    // console.log('these are ', images)
     return (
       <View style={styles.container}>
         {images.length 

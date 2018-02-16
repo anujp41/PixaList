@@ -13,9 +13,8 @@ const getResult = result => {
 
 export const getResultThunk = searchItem => dispatch => {
   const search = searchItem.replace(' ', '+');
-  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo`)
-  .then(result => console.log('got data ', result))
-  // .then(result => dispatch(getResult(result.data)))
+  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo&per_page=200&page=1`)
+  .then(result => dispatch(getResult(result.data)))
 }
 
 export default (state = result, action) => {
