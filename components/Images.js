@@ -9,11 +9,11 @@ import { connect } from 'react-redux';
 
 class Images extends Component {
 
-  // constructor() {
-  //   super();
-  //   this._renderImages = this._renderImages.bind(this);
-  //   this._renderWait = this._renderWait.bind(this);
-  // }
+  constructor() {
+    super();
+    // this._renderImages = this._renderImages.bind(this);
+    this._renderWait = this._renderWait.bind(this);
+  }
 
   // _renderImages() {
   //   return (<View style={styles.container}>
@@ -21,9 +21,9 @@ class Images extends Component {
   //   </View>)
   // }
 
-  // _renderWait() {
-  //   return <ActivityIndicator size="large" color="#0000ff" />
-  // }
+  _renderWait() {
+    return <ActivityIndicator size="large" color="#0000ff" />
+  }
 
   render() {
     const images = JSON.parse(JSON.stringify(this.props.images));
@@ -32,7 +32,7 @@ class Images extends Component {
       <View style={styles.container}>
         {images.length 
         ? <Text style={styles.welcome}>These are the results</Text>
-        : <ActivityIndicator size="large" color="#0000ff" />}
+        : this._renderWait()}
       </View>
     )
   }
