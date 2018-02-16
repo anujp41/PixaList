@@ -14,7 +14,7 @@ class Search extends Component {
   constructor() {
     super();
     this.state = {
-      search: ''
+      search: 'Yellow Flower'
     }
     this.onPress = this.onPress.bind(this);
   }
@@ -31,6 +31,7 @@ class Search extends Component {
         <TextInput
           style={styles.instructions}
           placeholder="Search for that picture...."
+          value={this.state.search}
           onChangeText={(search) => this.setState({search})}
         />
         <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={this.onPress}>

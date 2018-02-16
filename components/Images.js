@@ -3,7 +3,9 @@ import {
   StyleSheet,
   View,
   Text,
-  ActivityIndicator
+  ActivityIndicator,
+  Image,
+  FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -11,27 +13,42 @@ class Images extends Component {
 
   constructor() {
     super();
-    // this._renderImages = this._renderImages.bind(this);
+    this._renderImages = this._renderImages.bind(this);
     this._renderWait = this._renderWait.bind(this);
+    this.keyExtractor = this.keyExtractor.bind(this);
+    this._renderItem = this._renderItem.bind(this);
   }
 
-  // _renderImages() {
-  //   return (<View style={styles.container}>
-  //       <Text style={styles.welcome}>These are the results</Text>
-  //   </View>)
-  // }
+  keyExtractor = image => image.id;
+
+  _renderItem = ({item}) => {
+    return <Image source={{uri: item.previewURL}} style={{width: 150, height: 150}}/>
+  }
+
+  _renderImages(images) {
+    const link = images[0].previewURL;
+    return (
+      <FlatList
+        keyExtractor={this.keyExtractor}
+        data={images}
+        numColumns={2}
+        renderItem={this._renderItem}
+      />
+    )
+  }
 
   _renderWait() {
     return <ActivityIndicator size="large" color="#0000ff" />
   }
 
   render() {
+    console.log('original ', this.props.images)
     const images = JSON.parse(JSON.stringify(this.props.images));
-    console.log('these are ', images, typeof images ,images.length)
+    console.log('these are ', images)
     return (
       <View style={styles.container}>
         {images.length 
-        ? <Text style={styles.welcome}>These are the results</Text>
+        ? this._renderImages(images)
         : this._renderWait()}
       </View>
     )
