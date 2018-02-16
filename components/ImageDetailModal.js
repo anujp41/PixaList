@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Modal, StyleSheet, Input } from 'react-native';
+import { Text, View, Button, StyleSheet, Input } from 'react-native';
+import Modal from 'react-native-modal';
 
 export default class ImageDetailModal extends Component {
 
@@ -11,20 +12,19 @@ export default class ImageDetailModal extends Component {
     const modalVisible = this.props.visible;
     const image = this.props.image;
     return (
-        <View style={styles.container}>
+        <View>
           <Modal
-              visible={modalVisible}
-              animationType={'slide'}
+              isVisible={modalVisible}
+              animationIn={'zoomInDown'}
+              animationOut={'zoomOutUp'}
           >
             <View style={styles.modalContainer}>
-              <View style={styles.innerContainer}>
                 <Button
                     onPress={() => this.closeModal()}
                     title="Close"
                 />
                   <Text>Please add more details to the step:</Text>
                   <Text>"{image.id}"</Text>
-              </View>
             </View>
           </Modal>
         </View>
@@ -33,19 +33,13 @@ export default class ImageDetailModal extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
   modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'grey',
-  },
-  innerContainer: {
-    alignItems: 'center',
     backgroundColor: 'white',
-    height: '50%'
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   modalContent: {
     backgroundColor: 'white',
