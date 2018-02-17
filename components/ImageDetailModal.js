@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button, StyleSheet, Input } from 'react-native';
+import { Text, View, Button, StyleSheet, Input, Image } from 'react-native';
 import Modal from 'react-native-modal';
 
 export default class ImageDetailModal extends Component {
@@ -12,22 +12,24 @@ export default class ImageDetailModal extends Component {
     const modalVisible = this.props.visible;
     const image = this.props.image;
     return (
-        <View>
           <Modal
               isVisible={modalVisible}
               animationIn={'zoomInDown'}
               animationOut={'zoomOutUp'}
+              supportedOrientations={['portrait', 'landscape']}
           >
-            <View style={styles.modalContainer}>
-                <Button
-                    onPress={() => this.closeModal()}
-                    title="Close"
-                />
-                  <Text>Please add more details to the step:</Text>
-                  <Text>"{image.id}"</Text>
+          <View style={styles.modalContainer}>
+            <Button
+                onPress={() => this.closeModal()}
+                title='X'
+            />
+              <Text style={styles.font} >
+                <Text style={styles.title} >Image Details:{'\n'}</Text>
+                <Image source={{uri: image.previewURL}} style={{width: 150, height: 150}}/>
+                <Text>"{image.id}"</Text>
+              </Text>
             </View>
           </Modal>
-        </View>
     );
   }
 }
@@ -41,24 +43,11 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
+  font: {
+    fontFamily: 'Cochin',
   },
-  button: {
-    backgroundColor: 'lightblue',
-    padding: 12,
-    margin: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
-  },
-  input: {
-    width : '75%',
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold'
   }
 });

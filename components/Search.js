@@ -14,7 +14,7 @@ class Search extends Component {
   constructor() {
     super();
     this.state = {
-      search: 'Yellow Flower'
+      search: 'Nepal'
     }
     this.onPress = this.onPress.bind(this);
   }
