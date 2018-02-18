@@ -11,16 +11,17 @@ const getResult = result => {
   return action;
 }
 
-export const getResultThunk = searchItem => dispatch => {
+export const getResultThunk = (searchItem, page) => dispatch => {
   const search = searchItem.replace(' ', '+');
-  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo&per_page=50&page=1`)
+  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo&per_page=200&page=${page}`)
+  // .then(images => console.log('here are ', images))
   .then(result => dispatch(getResult(result.data)))
 }
 
 export default (state = result, action) => {
   switch (action.type) {
     case GET_RESULTS:
-      return action.images
+      return [...state, ...action.images]
 
     default:
       return state;

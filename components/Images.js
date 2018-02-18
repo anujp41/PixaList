@@ -11,6 +11,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
+import { getResultThunk } from '../store';
 import ImageDetailModal from './ImageDetailModal';
 
 class Images extends Component {
@@ -22,9 +23,11 @@ class Images extends Component {
     this.keyExtractor = this.keyExtractor.bind(this);
     this._renderItem = this._renderItem.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.getMoreImages = this.getMoreImages.bind(this);
     this.state = {
       showModal: false,
-      image: ''
+      image: '',
+      currPage: 1
     }
   }
 
@@ -37,6 +40,13 @@ class Images extends Component {
   }
 
   keyExtractor = image => image.id;
+
+  getMoreImages = () => {
+    const currPage = ++this.state.currPage;
+    this.setState({ currPage });
+    console.log('i am called ', currPage);
+    this.props.getResult('Nepal', currPage);
+  }
 
   _renderItem = ({item}) => {
     return (
@@ -54,6 +64,8 @@ class Images extends Component {
         data={images}
         numColumns={2}
         renderItem={this._renderItem}
+        onEndReachedThreshold={0.5}
+        onEndReached={this.getMoreImages}
       />
     )
   }
@@ -69,6 +81,7 @@ class Images extends Component {
 
   render() {
     const images = this.props.images;
+    // console.log('images are ', images)
     return (
       <View style={styles.container}>
         {images.length 
@@ -86,7 +99,16 @@ const mapState = state => {
   }
 }
 
-const ImagesContainer = connect(mapState, null)(Images);
+const mapDispatch = dispatch => {
+  return {
+    getResult: search => {
+      const action = getResultThunk(search, 2);
+      dispatch(action);
+    }
+  }
+}
+
+const ImagesContainer = connect(mapState, mapDispatch)(Images);
 export default ImagesContainer;
 
 const styles = StyleSheet.create({

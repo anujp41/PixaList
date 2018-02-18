@@ -45,7 +45,7 @@ class Search extends Component {
 const mapDispatch = dispatch => {
   return {
     getResult: search => {
-      const action = getResultThunk(search);
+      const action = getResultThunk(search, 1);
       dispatch(action);
     }
   }
