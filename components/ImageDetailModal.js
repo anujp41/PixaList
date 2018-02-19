@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 export default class ImageDetailModal extends Component {
 
   closeModal = () => {
-    this.props.toggleModal();
+    this.props.toggleModal(null);
   }
 
   render() {

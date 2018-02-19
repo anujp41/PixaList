@@ -26,26 +26,35 @@ class Images extends Component {
     this.getMoreImages = this.getMoreImages.bind(this);
     this.state = {
       showModal: false,
-      image: '',
-      currPage: 1
+      image: null,
+      currPage: 1,
+      search: ''
     }
   }
 
+  componentWillMount() {
+    const search = this.props.navigation.state.params.search;
+    this.setState({ search });
+  }
+
   toggleModal = image => {
-    if (image === undefined) image = ''
     this.setState({
       image ,
       showModal: !this.state.showModal,
     })
   }
 
-  keyExtractor = image => image.id;
+  keyExtractor = image => {
+    const key = image.id;
+    console.log('key is ', key);
+    return key;
+  }
 
   getMoreImages = () => {
     const currPage = ++this.state.currPage;
+    const search = this.state.search;
     this.setState({ currPage });
-    console.log('i am called ', currPage);
-    this.props.getResult('Nepal', currPage);
+    this.props.moreResult(search, currPage);
   }
 
   _renderItem = ({item}) => {
@@ -81,13 +90,12 @@ class Images extends Component {
 
   render() {
     const images = this.props.images;
-    // console.log('images are ', images)
     return (
       <View style={styles.container}>
         {images.length 
         ? this._renderImages(images)
         : this._renderWait()}
-        <ImageDetailModal visible={this.state.showModal} toggleModal={this.toggleModal} image={this.state.image} />
+        {this.state.showModal && <ImageDetailModal visible={this.state.showModal} toggleModal={this.toggleModal} image={this.state.image} />}
       </View>
     )
   }
@@ -101,7 +109,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getResult: search => {
+    moreResult: search => {
       const action = getResultThunk(search, 2);
       dispatch(action);
     }
