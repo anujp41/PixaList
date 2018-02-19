@@ -16,8 +16,8 @@ import ImageDetailModal from './ImageDetailModal';
 
 class Images extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this._renderImages = this._renderImages.bind(this);
     this._renderWait = this._renderWait.bind(this);
     this.keyExtractor = this.keyExtractor.bind(this);
@@ -28,13 +28,16 @@ class Images extends Component {
       showModal: false,
       image: null,
       currPage: 1,
-      search: ''
+      search: '',
+      totalImages: null
     }
   }
 
-  componentWillMount() {
-    const search = this.props.navigation.state.params.search;
-    this.setState({ search });
+  componentWillReceiveProps() {
+    const { search } = this.props.navigation.state.params;
+    const { totalImages } = this.props;
+    console.log('total images returned ', this.props)
+    this.setState({ search, totalImages });
   }
 
   toggleModal = image => {
@@ -44,16 +47,14 @@ class Images extends Component {
     })
   }
 
-  keyExtractor = image => {
-    const key = image.id;
-    console.log('key is ', key);
-    return key;
-  }
+  keyExtractor = image => image.id;
 
   getMoreImages = () => {
-    const currPage = ++this.state.currPage;
-    const search = this.state.search;
-    this.setState({ currPage });
+    let { currPage, search, totalImages } = this.state;
+    const images = this.props.images;
+    console.log('total images = ', totalImages, ' & current images = ', images.length)
+    if ( images.length >= totalImages ) console.log('got all images')
+    this.setState({ currPage: ++currPage });
     this.props.moreResult(search, currPage);
   }
 
@@ -66,7 +67,6 @@ class Images extends Component {
   }
 
   _renderImages(images) {
-    const link = images[0].previewURL;
     return (
       <FlatList
         keyExtractor={this.keyExtractor}
@@ -88,12 +88,21 @@ class Images extends Component {
     )
   }
 
+  _renderText() {
+    return (
+      <Text>Your search did not return any result!</Text>
+    )
+  }
+
   render() {
-    const images = this.props.images;
+    const { images } = this.props;
+    console.log('my props are ', this.props)
     return (
       <View style={styles.container}>
-        {images.length 
-        ? this._renderImages(images)
+        {images  
+        ? images.length 
+            ? this._renderImages(images) 
+            : this._renderText()
         : this._renderWait()}
         {this.state.showModal && <ImageDetailModal visible={this.state.showModal} toggleModal={this.toggleModal} image={this.state.image} />}
       </View>
@@ -103,14 +112,15 @@ class Images extends Component {
 
 const mapState = state => {
   return {
-    images: state.result
+    images: state.result.hits,
+    totalImages: state.result.totalHits
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    moreResult: search => {
-      const action = getResultThunk(search, 2);
+    moreResult: ( search, page) => {
+      const action = getResultThunk(search, page);
       dispatch(action);
     }
   }
@@ -128,6 +138,10 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 150,
-    width: 150
-  },
+    width: 150,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingRight: 5,
+    paddingLeft: 5
+  }
 });

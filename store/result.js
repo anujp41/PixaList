@@ -7,8 +7,8 @@ const MORE_RESULTS = 'MORE_RESULTS';
 let result = [];
 
 const getResult = result => {
-  const images = result.hits;
-  const action = { type: GET_RESULTS, images };
+  const { totalHits, hits } = result;
+  const action = { type: GET_RESULTS, result: { totalHits, hits } };
   return action;
 }
 
@@ -19,19 +19,22 @@ const moreResult = result => {
 }
 
 export const getResultThunk = (searchItem, page) => dispatch => {
-  console.log('you are searching ', searchItem)
   const search = searchItem.replace(' ', '+');
-  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo&per_page=5&page=${page}`)
+  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo&per_page=50&page=${page}`)
   .then(result => page === 1 ? dispatch(getResult(result.data)) : dispatch(moreResult(result.data)))
 }
 
 export default (state = result, action) => {
   switch (action.type) {
     case GET_RESULTS:
-      return action.images
+      return action.result
 
     case MORE_RESULTS:
-      return [...state, ...action.images]
+      const result = {
+        totalHits: state.totalHits,
+        hits: [...state.hits, ...action.images]
+      }
+      return result
 
     default:
       return state;
