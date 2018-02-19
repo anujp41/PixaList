@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import { getResultThunk } from '../store';
 import ImageDetailModal from './ImageDetailModal';
+import Toast, { DURATION } from 'react-native-easy-toast';
 
 class Images extends Component {
 
@@ -24,6 +25,7 @@ class Images extends Component {
     this._renderItem = this._renderItem.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.getMoreImages = this.getMoreImages.bind(this);
+    this.showToast = this.showToast.bind(this);
     this.state = {
       showModal: false,
       image: null,
@@ -36,7 +38,6 @@ class Images extends Component {
   componentDidMount() {
     const { search } = this.props.navigation.state.params;
     const { totalImages } = this.props;
-    console.log('total images returned ', this.props)
     this.setState({ search, totalImages });
   }
 
@@ -49,13 +50,18 @@ class Images extends Component {
 
   keyExtractor = image => image.id;
 
+  showToast = () => this.refs.toast.show('All images seen!')
+
   getMoreImages = () => {
     let { currPage, search } = this.state;
     const { images, totalImages } = this.props;
-    console.log('total images = ', totalImages, ' & current images = ', images.length)
-    if ( images.length >= totalImages ) console.log('got all images')
-    this.setState({ currPage: ++currPage });
-    this.props.moreResult(search, currPage);
+    console.log('totalImages ', totalImages, ' and returned ', images.length)
+    if ( totalImages <= images.length ) {
+      this.showToast();
+    } else {
+      this.setState({ currPage: ++currPage });
+      this.props.moreResult(search, currPage);
+    }
   }
 
   _renderItem = ({item}) => {
@@ -104,6 +110,7 @@ class Images extends Component {
             : this._renderText()
         : this._renderWait()}
         {this.state.showModal && <ImageDetailModal visible={this.state.showModal} toggleModal={this.toggleModal} image={this.state.image} />}
+        <Toast ref="toast" />
       </View>
     )
   }
@@ -118,7 +125,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    moreResult: ( search, page) => {
+    moreResult: ( search, page ) => {
       const action = getResultThunk(search, page);
       dispatch(action);
     }
