@@ -33,7 +33,7 @@ class Images extends Component {
     }
   }
 
-  componentWillReceiveProps() {
+  componentDidMount() {
     const { search } = this.props.navigation.state.params;
     const { totalImages } = this.props;
     console.log('total images returned ', this.props)
@@ -50,8 +50,8 @@ class Images extends Component {
   keyExtractor = image => image.id;
 
   getMoreImages = () => {
-    let { currPage, search, totalImages } = this.state;
-    const images = this.props.images;
+    let { currPage, search } = this.state;
+    const { images, totalImages } = this.props;
     console.log('total images = ', totalImages, ' & current images = ', images.length)
     if ( images.length >= totalImages ) console.log('got all images')
     this.setState({ currPage: ++currPage });
@@ -96,7 +96,6 @@ class Images extends Component {
 
   render() {
     const { images } = this.props;
-    console.log('my props are ', this.props)
     return (
       <View style={styles.container}>
         {images  
