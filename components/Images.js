@@ -50,17 +50,16 @@ class Images extends Component {
 
   keyExtractor = image => image.id;
 
-  showToast = () => this.refs.toast.show('All images seen!')
+  showToast = () => this.refs.toast.show('All images have been served!', 2000)
 
   getMoreImages = () => {
     let { currPage, search } = this.state;
     const { images, totalImages } = this.props;
-    console.log('totalImages ', totalImages, ' and returned ', images.length)
-    if ( totalImages <= images.length ) {
-      this.showToast();
+    if (totalImages <= images.length) {
+      this.showToast()
     } else {
-      this.setState({ currPage: ++currPage });
-      this.props.moreResult(search, currPage);
+      this.setState({ currPage: ++currPage })
+      this.props.moreResult(search, currPage)
     }
   }
 
@@ -110,7 +109,7 @@ class Images extends Component {
             : this._renderText()
         : this._renderWait()}
         {this.state.showModal && <ImageDetailModal visible={this.state.showModal} toggleModal={this.toggleModal} image={this.state.image} />}
-        <Toast ref="toast" />
+        <Toast ref="toast" fadeInDuration={500} fadeOutDuration={1000}/>
       </View>
     )
   }
