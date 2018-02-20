@@ -78,7 +78,7 @@ class Images extends Component {
         data={images}
         numColumns={2}
         renderItem={this._renderItem}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.75}
         onEndReached={this.getMoreImages}
       />
     )
@@ -95,7 +95,12 @@ class Images extends Component {
 
   _renderText() {
     return (
-      <Text>Your search did not return any result!</Text>
+      <View>
+        <Text>Your search did not return any result!</Text>
+          <TouchableHighlight style={styles.button} onPress={() => this.props.navigation.navigate('Search')}>
+            <Text style={styles.buttonText}>Click to go to Search</Text>
+          </TouchableHighlight>
+      </View>
     )
   }
 
@@ -148,5 +153,21 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingRight: 5,
     paddingLeft: 5
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#c5ec47',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    marginTop: 25,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   }
 });
