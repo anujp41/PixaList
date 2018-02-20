@@ -98,7 +98,7 @@ class Images extends Component {
       <View>
         <Text>Your search did not return any result!</Text>
           <TouchableHighlight style={styles.button} onPress={() => this.props.navigation.navigate('Search')}>
-            <Text style={styles.buttonText}>Click to go to Search</Text>
+            <Text style={styles.buttonText}>Go back to Search</Text>
           </TouchableHighlight>
       </View>
     )
@@ -161,8 +161,8 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 36,
-    backgroundColor: '#c5ec47',
-    borderColor: '#48BBEC',
+    backgroundColor: '#47ec86',
+    borderColor: '#47ec86',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,

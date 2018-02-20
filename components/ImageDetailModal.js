@@ -26,8 +26,8 @@ export default class ImageDetailModal extends Component {
               <Text style={styles.font} >
                 <Text style={styles.title} >Image Details:{'\n'}</Text>
                 <Image source={{uri: image.webformatURL}} style={[ ...styles.detail, {width: 250, height: 250}]}/>
-                <Text style={styles.detail}>{'\n'}Uploaded by: {image.user}{'\n'}</Text>
-                <Text style={styles.detail}>Tags: {image.tags}{'\n'}</Text>
+                <Text style={styles.detail}>{'\n'}{'\n'}Uploaded by: {image.user}{'\n'}{'\n'}</Text>
+                <Text style={styles.detail}>Tags: {image.tags}{'\n'}{'\n'}</Text>
                 <Text style={styles.detail}>Resolution: {image.webformatWidth} X {image.webformatWidth}</Text>
               </Text>
             </View>
