@@ -8,7 +8,8 @@ import {
   ActivityIndicator,
   Image,
   FlatList,
-  TouchableHighlight
+  TouchableHighlight,
+  Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import { getResultThunk } from '../store';
@@ -26,12 +27,14 @@ class Images extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.getMoreImages = this.getMoreImages.bind(this);
     this.showToast = this.showToast.bind(this);
+    this.layout = this.layout.bind(this);
     this.state = {
       showModal: false,
       image: null,
       currPage: 1,
       search: '',
-      totalImages: null
+      totalImages: null,
+      numColumns: 0
     }
   }
 
@@ -39,6 +42,12 @@ class Images extends Component {
     const { search } = this.props.navigation.state.params;
     const { totalImages } = this.props;
     this.setState({ search, totalImages });
+  }
+
+  layout = () => {
+    const { width, height } = Dimensions.get('window')
+    const numColumns = width < height ? 2 : 4
+    this.setState({ numColumns })
   }
 
   toggleModal = image => {
@@ -72,11 +81,13 @@ class Images extends Component {
   }
 
   _renderImages(images) {
+    const numColumns = this.state.numColumns;
     return (
       <FlatList
+        key={numColumns}
         keyExtractor={this.keyExtractor}
         data={images}
-        numColumns={2}
+        numColumns={numColumns}
         renderItem={this._renderItem}
         onEndReachedThreshold={0.75}
         onEndReached={this.getMoreImages}
@@ -107,7 +118,7 @@ class Images extends Component {
   render() {
     const { images } = this.props;
     return (
-      <View style={styles.container}>
+      <View style={styles.container} onLayout={this.layout}>
         {images  
         ? images.length 
             ? this._renderImages(images) 

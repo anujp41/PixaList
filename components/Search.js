@@ -25,6 +25,10 @@ class Search extends Component {
     this.props.navigation.navigate('Images', {search});
   }
 
+  componentDidMount() {
+    console.disableYellowBox = true;
+  }
+
   render() {
     return (
       <View >

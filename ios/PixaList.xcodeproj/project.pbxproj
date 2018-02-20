@@ -613,7 +613,7 @@
 		C1D124582033A0EF0010B677 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				44B1A1A54E1C435DA3BAE9A1 /* libRNVectorIcons.a */,
+				CB986CD53A04494F8206DACA /* libRCTOrientation.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";

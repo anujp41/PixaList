@@ -19,10 +19,6 @@ export default class ImageDetailModal extends Component {
               supportedOrientations={['portrait', 'landscape']}
           >
           <View style={styles.modalContainer}>
-            <Button
-                onPress={() => this.closeModal()}
-                title='X'
-            />
               <Text style={styles.font} >
                 <Text style={styles.title} >Image Details:{'\n'}</Text>
                 <Image source={{uri: image.webformatURL}} style={[ ...styles.detail, {width: 250, height: 250}]}/>
@@ -30,6 +26,10 @@ export default class ImageDetailModal extends Component {
                 <Text style={styles.detail}>Tags: {image.tags}{'\n'}{'\n'}</Text>
                 <Text style={styles.detail}>Resolution: {image.webformatWidth} X {image.webformatWidth}</Text>
               </Text>
+              <Button
+                onPress={() => this.closeModal()}
+                title='X'
+            />
             </View>
           </Modal>
     );
