@@ -6,4 +6,4 @@
     - Installed Android Studio and created an AVD
     - In command line, navigated to: /USERNAME/Library/Android/sdk/tools/
     - Specified AVD by typing: emulator -avd AVD_NAME
-    - In a separate cmd line tab, navigated to the React Native project and types: react-native run-android
+    - In a separate cmd line tab and once the specified AVD opened, navigated to the React Native project and typed: react-native run-android
