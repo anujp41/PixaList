@@ -28,7 +28,7 @@ export default class ImageDetailModal extends Component {
                   <Text style={{fontWeight: 'bold'}}>Tags: </Text><Text>{image.tags}</Text>{'\n'}{'\n'}
                   <Text style={{fontWeight: 'bold'}}>Resolution: </Text><Text>{image.webformatWidth} X {image.webformatHeight}</Text>
                 </Text>
-                <TouchableHighlight style={styles.button} onPress={this.closeModal}>
+                <TouchableHighlight style={styles.button} underlayColor='#cbd0ef' onPress={this.closeModal}>
                   <Text style={styles.buttonText}>Close</Text>
                 </TouchableHighlight>
               </View>
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 36,
-    backgroundColor: '#99f4c9',
-    borderColor: '#99f4c9',
+    backgroundColor: '#6d80f1',
+    borderColor: '#6d80f1',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
