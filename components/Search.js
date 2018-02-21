@@ -22,7 +22,7 @@ class Search extends Component {
   }
 
   showToast() {
-    this.refs.toast.show('Nothing to search for! Please enter a term.', 1000);
+    this.refs.toast.show('Nothing to search for! Please type in the search bar.', 500);
   }
 
   onPress() {
@@ -44,7 +44,7 @@ class Search extends Component {
         <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={this.onPress}>
           <Text style={styles.buttonText}>Check PixaBay for item</Text>
         </TouchableHighlight>
-        <Toast ref="toast" fadeInDuration={250} fadeOutDuration={500}/>
+        <Toast ref="toast" fadeInDuration={250} position='top' style={styles.toast} textStyle={{color:'black'}}/>
       </View>
     );
   }
@@ -87,5 +87,8 @@ const styles = StyleSheet.create({
     marginTop: 25,
     alignSelf: 'stretch',
     justifyContent: 'center'
+  },
+  toast: {
+    backgroundColor: '#baf26d'
   }
 });
