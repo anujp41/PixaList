@@ -3,6 +3,7 @@ import { pixabayKey } from '../pixaBayKey';
 
 const GET_RESULTS = 'GET_RESULTS';
 const MORE_RESULTS = 'MORE_RESULTS';
+const EMPTY_RESULTS = 'EMPTY_RESULTS';
 
 let result = [];
 
@@ -15,6 +16,11 @@ const getResult = result => {
 const moreResult = result => {
   const images = result.hits;
   const action = { type: MORE_RESULTS, images };
+  return action;
+}
+
+export const emptyImages = () => {
+  const action = { type: EMPTY_RESULTS };
   return action;
 }
 
@@ -35,6 +41,9 @@ export default (state = result, action) => {
         hits: [...state.hits, ...action.images]
       }
       return result
+
+    case EMPTY_RESULTS:
+      return []
 
     default:
       return state;

@@ -12,7 +12,7 @@ import {
   Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getResultThunk } from '../store';
+import { getResultThunk, emptyImages } from '../store';
 import ImageDetailModal from './ImageDetailModal';
 import Toast from 'react-native-easy-toast';
 
@@ -42,6 +42,10 @@ class Images extends Component {
     const { search } = this.props.navigation.state.params;
     const { totalImages } = this.props;
     this.setState({ search, totalImages });
+  }
+
+  componentWillUnmount() {
+    this.props.removeImages();
   }
 
   layout = () => {
@@ -144,6 +148,10 @@ const mapDispatch = dispatch => {
     moreResult: ( search, page ) => {
       const action = getResultThunk(search, page);
       dispatch(action);
+    },
+    removeImages: () => {
+      const action = emptyImages();
+      dispatch(action)
     }
   }
 }
