@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
+    width: 300
   },
   font: {
     fontFamily: 'Cochin',
@@ -59,7 +60,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     alignSelf: 'center',
-    color: '#f499da',
     fontWeight: 'bold'
   },
   button: {

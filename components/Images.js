@@ -67,7 +67,8 @@ class Images extends Component {
     if (totalImages <= images.length) {
       this.showToast()
     } else {
-      this.setState({ currPage: ++currPage })
+      currPage++
+      this.setState({ currPage })
       this.props.moreResult(search, currPage)
     }
   }
