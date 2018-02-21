@@ -45,6 +45,7 @@ class Search extends Component {
           placeholder="Click to search for that picture...."
           value={this.state.search}
           onChangeText={(search) => this.setState({search})}
+          disableFullscreenUI={true}
         />
         <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={this.onPress}>
           <Text style={styles.buttonText}>Check PixaBay for item</Text>
