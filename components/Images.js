@@ -126,7 +126,7 @@ class Images extends Component {
             : this._renderText()
         : this._renderWait()}
         {this.state.showModal && <ImageDetailModal visible={this.state.showModal} toggleModal={this.toggleModal} image={this.state.image}/>}
-        <Toast ref="toast" fadeInDuration={500} fadeOutDuration={1000} position='center'/>
+        <Toast ref="toast" fadeInDuration={500} fadeOutDuration={1000} position='top'/>
       </View>
     )
   }
