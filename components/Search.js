@@ -6,7 +6,8 @@ import {
   TextInput,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import Toast from 'react-native-easy-toast';
@@ -38,8 +39,8 @@ class Search extends Component {
     return (
       <View >
         <TextInput
-          style={styles.instructions}
-          placeholder="Search for that picture...."
+          style={styles.searchBox}
+          placeholder="Click to search for that picture...."
           value={this.state.search}
           onChangeText={(search) => this.setState({search})}
         />
@@ -65,14 +66,17 @@ const SearchContainer = connect(null, mapDispatch)(Search);
 export default SearchContainer;
 
 const styles = StyleSheet.create({
-  instructions: {
+  searchBox: {
     marginTop: 25,
-    height: 25,
     textAlign: 'center',
     color: '#333333',
-    borderBottomWidth: 1,
     height: 50,
-    fontSize: 20
+    fontSize: 20,
+    ...Platform.select({
+      ios: {
+        borderBottomWidth: 1
+      }
+    }),
   },
   buttonText: {
     fontSize: 18,
