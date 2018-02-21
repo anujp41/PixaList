@@ -7,26 +7,29 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
+import Toast from 'react-native-easy-toast';
 import { getResultThunk } from '../store';
 
 class Search extends Component {
 
   constructor() {
     super();
-    this.state = {
-      search: 'Nepal'
-    }
     this.onPress = this.onPress.bind(this);
+    this.showToast = this.showToast.bind(this);
+    this.state = {
+      search: ''
+    }
+  }
+
+  showToast() {
+    this.refs.toast.show('Nothing to search for! Please enter a term.', 1000);
   }
 
   onPress() {
     const search = this.state.search;
+    if (search.length === 0) return this.showToast();
     this.props.getResult(search);
     this.props.navigation.navigate('Images', {search});
-  }
-
-  componentDidMount() {
-    console.disableYellowBox = true;
   }
 
   render() {
@@ -39,8 +42,9 @@ class Search extends Component {
           onChangeText={(search) => this.setState({search})}
         />
         <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={this.onPress}>
-          <Text style={styles.buttonText}>Search PixaBay</Text>
+          <Text style={styles.buttonText}>Check PixaBay for item</Text>
         </TouchableHighlight>
+        <Toast ref="toast" fadeInDuration={250} fadeOutDuration={500}/>
       </View>
     );
   }

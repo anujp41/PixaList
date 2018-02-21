@@ -1,3 +1,5 @@
+'use strict'
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -16,6 +18,10 @@ class Login extends Component {
 
   onPress() {
     this.props.navigation.navigate('Search');
+  }
+
+  componentDidMount() {
+    console.disableYellowBox = true;
   }
 
   render() {
@@ -47,6 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    fontFamily: 'cochin'
   },
   buttonText: {
     fontSize: 18,

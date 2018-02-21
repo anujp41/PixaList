@@ -6,7 +6,10 @@ export const AppScreens = StackNavigator({
     screen: Login
   },
   Search: {
-    screen: Search
+    screen: Search,
+    navigationOptions: {
+      title: 'Search Page',
+    }
   },
   Images: {
     screen: Images

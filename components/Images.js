@@ -14,7 +14,7 @@ import {
 import { connect } from 'react-redux';
 import { getResultThunk } from '../store';
 import ImageDetailModal from './ImageDetailModal';
-import Toast, { DURATION } from 'react-native-easy-toast';
+import Toast from 'react-native-easy-toast';
 
 class Images extends Component {
 
