@@ -7,7 +7,8 @@ import {
   Text,
   View,
   TouchableHighlight,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native';
 import { connect } from 'react-redux';
 import Toast from 'react-native-easy-toast';
@@ -33,6 +34,7 @@ class Search extends Component {
     if (search.length === 0) return this.showToast();
     this.props.getResult(search);
     this.props.navigation.navigate('Images', {search});
+    Keyboard.dismiss();
   }
 
   render() {
