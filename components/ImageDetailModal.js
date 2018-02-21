@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button, StyleSheet, Input, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableHighlight, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 
 export default class ImageDetailModal extends Component {
@@ -17,20 +17,22 @@ export default class ImageDetailModal extends Component {
               animationIn={'zoomInDown'}
               animationOut={'zoomOutUp'}
               supportedOrientations={['portrait', 'landscape']}
+              style={{justifyContent: 'center', alignItems: 'center'}}
           >
-          <View style={styles.modalContainer}>
-              <Text style={styles.font} >
-                <Text style={styles.title} >Image Details:{'\n'}</Text>
-                <Image source={{uri: image.webformatURL}} style={[ ...styles.detail, {width: 250, height: 250}]}/>
-                <Text style={styles.detail}>{'\n'}{'\n'}Uploaded by: {image.user}{'\n'}{'\n'}</Text>
-                <Text style={styles.detail}>Tags: {image.tags}{'\n'}{'\n'}</Text>
-                <Text style={styles.detail}>Resolution: {image.webformatWidth} X {image.webformatWidth}</Text>
-              </Text>
-              <Button
-                onPress={() => this.closeModal()}
-                title='X'
-            />
-            </View>
+          <ScrollView>
+            <View style={styles.modalContainer}>
+                <Text style={styles.font} >
+                  <Text style={styles.title} >Image Details:{'\n'}{'\n'}</Text>
+                  <Image source={{uri: image.webformatURL}} style={[ ...styles.detail, {width: 250, height: 250}]} />
+                  <Text style={styles.detail}>{'\n'}{'\n'}Uploaded by: {image.user}{'\n'}{'\n'}</Text>
+                  <Text style={styles.detail}>Tags: {image.tags}{'\n'}{'\n'}</Text>
+                  <Text style={styles.detail}>Resolution: {image.webformatWidth} X {image.webformatHeight}</Text>
+                </Text>
+                <TouchableHighlight style={styles.button} onPress={this.closeModal}>
+                  <Text style={styles.buttonText}>Close</Text>
+                </TouchableHighlight>
+              </View>
+            </ScrollView>
           </Modal>
     );
   }
@@ -55,5 +57,23 @@ const styles = StyleSheet.create({
   },
   detail: {
     marginBottom: 25
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center',
+    color: '#f499da',
+    fontWeight: 'bold'
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#99f4c9',
+    borderColor: '#99f4c9',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    marginTop: 25,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   }
 });
