@@ -1,6 +1,7 @@
 export { default as Login } from './Login';
 export { default as Search } from './Search';
 export { default as Images } from './Images';
+export { default as Favorites } from './Favorites';
 
 import React, { Component } from 'react';
 import {

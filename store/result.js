@@ -26,7 +26,7 @@ export const emptyImages = () => {
 
 export const getResultThunk = (searchItem, page) => dispatch => {
   const search = searchItem.replace(' ', '+');
-  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo&per_page=50&page=${page}&safesearch=true`)
+  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo&per_page=50&page=${page}`)
   .then(result => page === 1 ? dispatch(getResult(result.data)) : dispatch(moreResult(result.data)))
 }
 

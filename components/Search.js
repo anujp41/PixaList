@@ -51,6 +51,16 @@ class Search extends Component {
           <Text style={styles.buttonText}>Check PixaBay for item</Text>
         </TouchableHighlight>
         <Toast ref="toast" fadeInDuration={250} position='top' style={styles.toast} textStyle={{color:'black'}}/>
+
+
+        <View style={styles.container}>
+          <Text style={styles.welcome}>
+            Or, you can go check your favorites!
+          </Text>
+          <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={() => this.props.navigation.navigate('Favorites')}>
+          <Text style={styles.buttonText}>Favorites</Text>
+        </TouchableHighlight>
+        </View>
       </View>
     );
   }
@@ -99,5 +109,18 @@ const styles = StyleSheet.create({
   },
   toast: {
     backgroundColor: '#baf26d'
+  },
+  container: {
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
   }
 });
