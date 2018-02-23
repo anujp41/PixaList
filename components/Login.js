@@ -8,6 +8,8 @@ import {
   TouchableHighlight,
   Image
 } from 'react-native';
+import { connect } from 'react-redux';
+import { getFavesThunk } from '../store';
 
 class Login extends Component {
 
@@ -17,6 +19,7 @@ class Login extends Component {
   }
 
   onPress() {
+    this.props.getFaves();
     this.props.navigation.navigate('Search');
   }
 
@@ -40,7 +43,17 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatch = dispatch => {
+  return {
+    getFaves: () => {
+      const action = getFavesThunk();
+      dispatch(action);
+    }
+  }
+}
+
+const LoginContainer = connect(null, mapDispatch)(Login);
+export default LoginContainer;
 
 const styles = StyleSheet.create({
   container: {

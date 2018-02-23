@@ -16,8 +16,8 @@ const addFaves = images => {
 }
 
 export const getFavesThunk = () => dispatch => {
-  database.ref('favorits').once('vale')
-  .then(snapshot => console.log('i got your favorites ', snapshot.val()))
+  database.ref('favorites').once('value')
+  .then(snapshot => dispatch(getFaves(snapshot.val())))
 }
 
 export const addFavesThunk = (image) => dispatch => {
