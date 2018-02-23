@@ -1,48 +1,22 @@
-import axios from 'axios';
+import firebase from '../firebase';
 
-const GET_RESULTS = 'GET_RESULTS';
-const MORE_RESULTS = 'MORE_RESULTS';
-const EMPTY_RESULTS = 'EMPTY_RESULTS';
+const GET_FAVES = 'GET_FAVES';
 
-let result = [];
+let favorites = [];
 
-const getResult = result => {
-  const { totalHits, hits } = result;
-  const action = { type: GET_RESULTS, result: { totalHits, hits } };
+const getFaves = favorites => {
+  const action = { type: GET_FAVES, favorites };
   return action;
 }
 
-const moreResult = result => {
-  const images = result.hits;
-  const action = { type: MORE_RESULTS, images };
-  return action;
+export const getFavesThunk = () => dispatch => {
+  console.log('i am getting')
 }
 
-export const emptyImages = () => {
-  const action = { type: EMPTY_RESULTS };
-  return action;
-}
-
-export const getResultThunk = (searchItem, page) => dispatch => {
-  const search = searchItem.replace(' ', '+');
-  axios.get(`https://pixabay.com/api/?key=${pixabayKey.key}&q=${search}&image_type=photo&per_page=50&page=${page}&safesearch=true`)
-  .then(result => page === 1 ? dispatch(getResult(result.data)) : dispatch(moreResult(result.data)))
-}
-
-export default (state = result, action) => {
+export default (state = favorites, action) => {
   switch (action.type) {
-    case GET_RESULTS:
-      return action.result
-
-    case MORE_RESULTS:
-      const result = {
-        totalHits: state.totalHits,
-        hits: [...state.hits, ...action.images]
-      }
-      return result
-
-    case EMPTY_RESULTS:
-      return []
+    case GET_FAVES:
+      return action.favorites
 
     default:
       return state;
