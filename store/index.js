@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import result from './result';
 import favorites from './favorites';
 
-const reducers = combineReducers({ result, addToFav });
+const reducers = combineReducers({ result, favorites });
 const middleWare = applyMiddleware( thunkMiddleware, createLogger());
 const store = createStore( reducers, middleWare );
 

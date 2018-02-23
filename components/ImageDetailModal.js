@@ -3,8 +3,10 @@ import { Text, View, StyleSheet, Image, TouchableHighlight, ScrollView } from 'r
 import Modal from 'react-native-modal';
 import { Icon } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
+import { connect } from 'react-redux';
+import { addFavesThunk } from '../store';
 
-export default class ImageDetailModal extends Component {
+class ImageDetailModal extends Component {
 
   constructor() {
     super();
@@ -22,6 +24,7 @@ export default class ImageDetailModal extends Component {
   addToFav() {
     if (this.state.likes) return;
     this.showToast();
+    this.props.addToFaves(this.props.image);
     this.setState({ likes: !this.state.likes});
   }
 
@@ -70,6 +73,18 @@ export default class ImageDetailModal extends Component {
     );
   }
 }
+
+const mapDispatch = dispatch => {
+  return {
+    addToFaves: image => {
+      const action = addFavesThunk(image);
+      dispatch(action);
+    }
+  }
+}
+
+const ImageDetailModalContainer = connect(null, mapDispatch)(ImageDetailModal);
+export default ImageDetailModalContainer;
 
 const styles = StyleSheet.create({
   modalContainer: {
