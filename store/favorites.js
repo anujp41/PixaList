@@ -2,8 +2,9 @@ import { database } from '../firebase';
 
 const ADD_FAVES = 'ADD_FAVES';
 const GET_FAVES = 'GET_FAVES';
+const REMOVE_FAVE = 'REMOVE_FAVE';
 
-let favorites = [];
+let favorites = {};
 
 const getFaves = favorites => {
   const action = { type: GET_FAVES, favorites };
@@ -12,6 +13,11 @@ const getFaves = favorites => {
 
 const addFaves = images => {
   const action = { type: ADD_FAVES, image };
+  return action;
+}
+
+const removeFave = image => {
+  const action = { type: REMOVE_FAVE, image };
   return action;
 }
 
@@ -26,13 +32,22 @@ export const addFavesThunk = (image) => dispatch => {
   //add code that adds to the favorite field
 }
 
+export const removeFaveThunk = (image) => dispatch => {
+  database.ref('favorites').child(image.id).remove()
+  dispatch(removeFave(image))
+}
+
 export default (state = favorites, action) => {
   switch (action.type) {
     case GET_FAVES:
-      return action.favorites
+      return action.favorites;
 
     case ADD_FAVES:
-      return action.favorites
+      return action.favorites;
+
+    case REMOVE_FAVE:
+      delete state[action.image.id]
+      return state;
 
     default:
       return state;

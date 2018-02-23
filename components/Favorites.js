@@ -10,20 +10,21 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Card, Icon } from 'react-native-elements'
+import { removeFaveThunk } from '../store';
 
 class Favorites extends Component {
 
   render() {
     const favorites = this.props.favorites;
-    const item = favorites['384'];
+    const item = favorites['3080114'];
     return (
         <View >
           {item 
           ?
           <Card
-          title='HELLO WORLD'
+          title='YOUR FAVORITES'
           image={{uri:item.webformatURL}}>
-          <TouchableHighlight onPress={() => console.log('to be removed')} underlayColor='#ed3d3d' style={styles.icon}>
+          <TouchableHighlight onPress={() => this.props.removeFave(item)} underlayColor='#ed3d3d' style={styles.icon}>
             <Icon name='favorite' color='red' />
           </TouchableHighlight>
           <Text style={{marginBottom: 10}}>
@@ -46,16 +47,16 @@ const mapState = state => {
   }
 }
 
-// const mapDispatch = dispatch => {
-//   return {
-//     getResult: search => {
-//       const action = getResultThunk(search, 1);
-//       dispatch(action);
-//     }
-//   }
-// }
+const mapDispatch = dispatch => {
+  return {
+    removeFave: item => {
+      const action = removeFaveThunk(item);
+      dispatch(action);
+    }
+  }
+}
 
-const FavoritesContainer = connect(mapState, null)(Favorites);
+const FavoritesContainer = connect(mapState, mapDispatch)(Favorites);
 export default FavoritesContainer;
 
 const styles = StyleSheet.create({
