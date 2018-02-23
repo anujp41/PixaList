@@ -6,11 +6,13 @@ import {
   Text,
   View
 } from 'react-native';
-// import { connect } from 'react-redux';
-// import Toast from 'react-native-easy-toast';
-// import { getResultThunk } from '../store';
+import { connect } from 'react-redux';
 
-export default class Favorites extends Component {
+class Favorites extends Component {
+
+  constructor() {
+    super()
+  }
 
   render() {
     return (
@@ -21,14 +23,20 @@ export default class Favorites extends Component {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapState = state => {
   return {
-    getResult: search => {
-      const action = getResultThunk(search, 1);
-      dispatch(action);
-    }
+    favorites: state.favorites
   }
 }
 
-// const SearchContainer = connect(null, null)(Search);
-// export default SearchContainer;
+// const mapDispatch = dispatch => {
+//   return {
+//     getResult: search => {
+//       const action = getResultThunk(search, 1);
+//       dispatch(action);
+//     }
+//   }
+// }
+
+const FavoritesContainer = connect(mapState, null)(Favorites);
+export default FavoritesContainer;

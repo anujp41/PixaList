@@ -58,8 +58,8 @@ class Search extends Component {
             Or, you can go check your favorites!
           </Text>
           <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={() => this.props.navigation.navigate('Favorites')}>
-          <Text style={styles.buttonText}>Favorites</Text>
-        </TouchableHighlight>
+            <Text style={styles.buttonText}>Favorites</Text>
+          </TouchableHighlight>
         </View>
       </View>
     );
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#baf26d'
   },
   container: {
-    backgroundColor: '#F5FCFF',
+    marginTop: 100,
   },
   welcome: {
     fontSize: 20,
