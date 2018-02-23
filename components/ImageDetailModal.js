@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, TouchableHighlight, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
+import { Icon } from 'react-native-elements';
 
 export default class ImageDetailModal extends Component {
 
@@ -23,7 +24,11 @@ export default class ImageDetailModal extends Component {
             <View style={styles.modalContainer}>
                 <Text style={styles.font} >
                   <Text style={styles.title} >Image Details:</Text>{'\n'}{'\n'}
-                  <Image source={{uri: image.webformatURL}} style={styles.image} />{'\n'}{'\n'}
+                  <Image source={{uri: image.webformatURL}} style={styles.image} />
+                  <View style={{width:50,height:50}}>
+                    <Icon name='favorite' color='red' />
+                  </View>
+                  {'\n'}{'\n'}
                   <Text style={{fontWeight: 'bold'}}>Uploaded by: </Text><Text>{image.user}</Text>{'\n'}{'\n'}
                   <Text style={{fontWeight: 'bold'}}>Tags: </Text><Text>{image.tags}</Text>{'\n'}{'\n'}
                   <Text style={{fontWeight: 'bold'}}>Resolution: </Text><Text>{image.webformatWidth} X {image.webformatHeight}</Text>
