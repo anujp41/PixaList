@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Toast from 'react-native-easy-toast';
-import { getResultThunk } from '../store';
+import { getResultThunk, getFavesThunk } from '../store';
 
 class Search extends Component {
 
@@ -20,6 +20,7 @@ class Search extends Component {
     super();
     this.onPress = this.onPress.bind(this);
     this.showToast = this.showToast.bind(this);
+    this.goToFavorites = this.goToFavorites.bind(this);
     this.state = {
       search: 'Nepal'
     }
@@ -35,6 +36,11 @@ class Search extends Component {
     this.props.getResult(search);
     this.props.navigation.navigate('Images', {search});
     Keyboard.dismiss();
+  }
+
+  goToFavorites() {
+    this.props.getFaves();
+    this.props.navigation.navigate('Favorites');
   }
 
   render() {
@@ -57,7 +63,7 @@ class Search extends Component {
           <Text style={styles.welcome}>
             Or, you can go check your favorites!
           </Text>
-          <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={() => this.props.navigation.navigate('Favorites')}>
+          <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={this.goToFavorites}>
             <Text style={styles.buttonText}>Favorites</Text>
           </TouchableHighlight>
         </View>
@@ -70,6 +76,10 @@ const mapDispatch = dispatch => {
   return {
     getResult: search => {
       const action = getResultThunk(search, 1);
+      dispatch(action);
+    },
+    getFaves: () => {
+      const action = getFavesThunk();
       dispatch(action);
     }
   }
