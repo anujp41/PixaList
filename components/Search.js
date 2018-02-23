@@ -21,7 +21,7 @@ class Search extends Component {
     this.onPress = this.onPress.bind(this);
     this.showToast = this.showToast.bind(this);
     this.state = {
-      search: ''
+      search: 'Nepal'
     }
   }
 

@@ -51,3 +51,9 @@ buck-out/
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+
+# Firebase key
+firebase.js
+
+# Pixabay key
+pixaBayKey.js
