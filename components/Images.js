@@ -122,6 +122,7 @@ class Images extends Component {
 
   render() {
     const { images } = this.props;
+    console.log('the images are ', images)
     return (
       <View style={styles.container} onLayout={this.layout}>
         {images  

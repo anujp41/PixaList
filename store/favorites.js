@@ -23,7 +23,12 @@ const removeFave = image => {
 
 export const getFavesThunk = () => dispatch => {
   database.ref('favorites').once('value')
-  .then(snapshot => dispatch(getFaves(snapshot.val())))
+  .then(snapshot => snapshot.val())
+  .then(images => {
+    const imagesArr = [];
+    Object.keys(images).map(item => imagesArr.push(images[item]));
+    dispatch(getFaves(imagesArr));
+  })
 }
 
 export const addFavesThunk = (image) => dispatch => {
@@ -46,8 +51,7 @@ export default (state = favorites, action) => {
       return action.favorites;
 
     case REMOVE_FAVE:
-      delete state[action.image.id]
-      return state;
+      return state.filter(favorite => favorite.id !== action.image.id)
 
     default:
       return state;
