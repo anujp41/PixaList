@@ -4,14 +4,14 @@ const ADD_FAVES = 'ADD_FAVES';
 const GET_FAVES = 'GET_FAVES';
 const REMOVE_FAVE = 'REMOVE_FAVE';
 
-let favorites = {};
+let favorites = [];
 
 const getFaves = favorites => {
   const action = { type: GET_FAVES, favorites };
   return action;
 }
 
-const addFaves = images => {
+const addFaves = image => {
   const action = { type: ADD_FAVES, image };
   return action;
 }
@@ -34,7 +34,7 @@ export const getFavesThunk = () => dispatch => {
 export const addFavesThunk = (image) => dispatch => {
   const key = image.id;
   database.ref('favorites').child(key).update(image)
-  //add code that adds to the favorite field
+  dispatch(addFaves(image))
 }
 
 export const removeFaveThunk = (image) => dispatch => {
@@ -48,7 +48,7 @@ export default (state = favorites, action) => {
       return action.favorites;
 
     case ADD_FAVES:
-      return action.favorites;
+      return [...state, action.image];
 
     case REMOVE_FAVE:
       return state.filter(favorite => favorite.id !== action.image.id)
