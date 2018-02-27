@@ -13,6 +13,7 @@ import { AppScreens } from '../navigation/router';
 import store from '../store';
 
 export default class App extends Component {
+
   render() {
     return (
       <Provider store={store}>

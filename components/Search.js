@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import Toast from 'react-native-easy-toast';
 import { getResultThunk, getFavesThunk } from '../store';
+import { GoogleSignin } from 'react-native-google-signin';
 
 class Search extends Component {
 
@@ -41,6 +42,11 @@ class Search extends Component {
   goToFavorites() {
     this.props.getFaves();
     this.props.navigation.navigate('Favorites');
+  }
+
+  componentDidMount() {
+    const user = GoogleSignin.currentUser();
+    console.log('current user is ', user);
   }
 
   render() {
