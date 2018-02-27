@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { SocialIcon } from 'react-native-elements';
 import { loginGoogleThunk } from '../store';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-import { googleAuth } from '../firebase';
+import { auth, googleAuthProvider } from '../firebase';
 
 class Login extends Component {
 
@@ -24,14 +24,10 @@ class Login extends Component {
     this.checkCurrUser = this.checkCurrUser.bind(this);
     this._renderLogin = this._renderLogin.bind(this);
     this._renderGo = this._renderGo.bind(this);
+    this.logOut = this.logOut.bind(this);
     this.state = {
-      user: null
+      user: 'Anuj'
     }
-  }
-
-  async checkCurrUser() {
-    const user = await GoogleSignin.currentUserAsync();
-    this.setState({ user });
   }
 
   componentWillMount() {
@@ -52,6 +48,11 @@ class Login extends Component {
     }
     this.checkCurrUser();
   }
+
+  async checkCurrUser() {
+    const user = await GoogleSignin.currentUserAsync();
+    this.setState({ user });
+  }
   
   componentDidMount() {
     console.disableYellowBox = true;
@@ -65,7 +66,10 @@ class Login extends Component {
     try {
       GoogleSignin.signIn()
       .then((user) => {
-        
+        const credential = googleAuthProvider.credential(user.idToken);
+        console.log('the credential is ', credential);
+        auth.signInWithCredential(credential)
+        .then(firebaseUser => console.log('logged into firebase ', firebaseUser));
         })
         .catch((err) => {
           console.log("WRONG SIGNIN", err);
@@ -75,6 +79,12 @@ class Login extends Component {
       catch(err) {
         console.log("Play services error", err.code, err.message);
       }
+  }
+
+  logOut() {
+    GoogleSignin.signOut()
+    .then(() => auth.signOut())
+    .then(() => console.log('signed out of firebase'))
   }
 
   _renderLogin() {
@@ -94,9 +104,9 @@ class Login extends Component {
 
   _renderGo(user) {
     return (
-      <TouchableHighlight style={styles.button} underlayColor='#426ed6' onPress={() => this.props.navigation.navigate('Search')}>
+      <TouchableHighlight style={styles.button} underlayColor='#426ed6' onPress={this.logOut}>
           <View flexDirection='row'>
-          <Text style={styles.buttonText}>Welcome {user.givenName}, let's search!</Text>
+          <Text style={styles.buttonText}>Welcome {user.givenName}, log out!</Text>
         </View>
       </TouchableHighlight>
     )
@@ -104,6 +114,7 @@ class Login extends Component {
 
   render() {
     const currUser = this.state.user;
+    console.log('the user is ', currUser)
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
