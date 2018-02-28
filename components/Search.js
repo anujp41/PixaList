@@ -39,17 +39,14 @@ class Search extends Component {
     Keyboard.dismiss();
   }
 
-  goToFavorites() {
-    this.props.getFaves();
+  goToFavorites(user) {
+    this.props.getFaves(user.uid);
     this.props.navigation.navigate('Favorites');
   }
 
-  componentDidMount() {
-    const user = GoogleSignin.currentUser();
-    console.log('current user is ', user);
-  }
-
   render() {
+    const user = this.props.user;
+    console.log('the user is ', user)
     return (
       <View >
         <TextInput
@@ -69,12 +66,18 @@ class Search extends Component {
           <Text style={styles.welcome}>
             Or, you can go check your favorites!
           </Text>
-          <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={this.goToFavorites}>
+          <TouchableHighlight style={styles.button} underlayColor='#99d9f4' onPress={() => this.goToFavorites(user)}>
             <Text style={styles.buttonText}>Favorites</Text>
           </TouchableHighlight>
         </View>
       </View>
     );
+  }
+}
+
+const mapState = state => {
+  return {
+    user: state.login
   }
 }
 
@@ -84,14 +87,14 @@ const mapDispatch = dispatch => {
       const action = getResultThunk(search, 1);
       dispatch(action);
     },
-    getFaves: () => {
-      const action = getFavesThunk();
+    getFaves: (userUid) => {
+      const action = getFavesThunk(userUid);
       dispatch(action);
     }
   }
 }
 
-const SearchContainer = connect(null, mapDispatch)(Search);
+const SearchContainer = connect(mapState, mapDispatch)(Search);
 export default SearchContainer;
 
 const styles = StyleSheet.create({

@@ -21,10 +21,10 @@ class ImageDetailModal extends Component {
     this.refs.fav.show('Image added to Favorites!', 1000)
   }
 
-  addToFav() {
+  addToFav(user) {
     if (this.state.likes) return;
     this.showToast();
-    this.props.addToFaves(this.props.image);
+    this.props.addToFaves(this.props.image, user.uid);
     this.setState({ likes: !this.state.likes});
   }
 
@@ -35,6 +35,8 @@ class ImageDetailModal extends Component {
   render() {
     const modalVisible = this.props.visible;
     const image = this.props.image;
+    const user = this.props.user;
+    console.log('images detail modal ', user)
     return (
           <Modal
               isVisible={modalVisible}
@@ -49,7 +51,7 @@ class ImageDetailModal extends Component {
                   <Text style={styles.title} >Image Details:</Text>{'\n'}{'\n'}
                   <Image source={{uri: image.webformatURL}} style={styles.image} />
                   <View style={styles.icon}>
-                    <TouchableHighlight onPress={this.addToFav} underlayColor='#ed3d3d'>
+                    <TouchableHighlight onPress={() => this.addToFav(user)} underlayColor='#ed3d3d'>
                       { this.state.likes
                         ?
                         <Icon name='favorite' color='red'/>
@@ -74,16 +76,22 @@ class ImageDetailModal extends Component {
   }
 }
 
+const mapState = state => {
+  return {
+    user: state.login
+  }
+}
+
 const mapDispatch = dispatch => {
   return {
-    addToFaves: image => {
-      const action = addFavesThunk(image);
+    addToFaves: (image, uid) => {
+      const action = addFavesThunk(image, uid);
       dispatch(action);
     }
   }
 }
 
-const ImageDetailModalContainer = connect(null, mapDispatch)(ImageDetailModal);
+const ImageDetailModalContainer = connect(mapState, mapDispatch)(ImageDetailModal);
 export default ImageDetailModalContainer;
 
 const styles = StyleSheet.create({

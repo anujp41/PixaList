@@ -21,8 +21,8 @@ const removeFave = image => {
   return action;
 }
 
-export const getFavesThunk = () => dispatch => {
-  database.ref('favorites').once('value')
+export const getFavesThunk = (uid) => dispatch => {
+  database.ref(`users/${uid}/favorites`).once('value')
   .then(snapshot => snapshot.val())
   .then(images => {
     const imagesArr = [];
@@ -31,9 +31,9 @@ export const getFavesThunk = () => dispatch => {
   })
 }
 
-export const addFavesThunk = (image) => dispatch => {
+export const addFavesThunk = (image, uid) => dispatch => {
   const key = image.id;
-  database.ref('favorites').child(key).update(image)
+  database.ref(`users/${uid}/favorites`).child(key).update(image)
   dispatch(addFaves(image))
 }
 
