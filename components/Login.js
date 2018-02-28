@@ -19,6 +19,7 @@ class Login extends Component {
 
   constructor() {
     super();
+    this.handleLogin = this.handleLogin.bind(this);
     this.checkCurrUser = this.checkCurrUser.bind(this);
     this._renderLogin = this._renderLogin.bind(this);
     this._renderGo = this._renderGo.bind(this);
@@ -56,6 +57,11 @@ class Login extends Component {
     console.disableYellowBox = true;
   }
 
+  handleLogin() {
+    this.props.loginGoogle();
+    this.props.navigation.navigate('Search');
+  }
+
   logOut() {
     GoogleSignin.signOut()
     // .then(() => auth.signOut())
@@ -70,7 +76,7 @@ class Login extends Component {
 
   _renderLogin() {
     return (
-      <TouchableHighlight style={styles.button} underlayColor='#426ed6' onPress={this.props.loginGoogle}>
+      <TouchableHighlight style={styles.button} underlayColor='#426ed6' onPress={this.handleLogin}>
           <View flexDirection='row'>
             <GoogleSigninButton
               style={{width: 48, height: 48}}
