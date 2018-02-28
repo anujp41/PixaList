@@ -19,8 +19,6 @@ class Login extends Component {
 
   constructor() {
     super();
-    // this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
-    // this._googleSignIn = this._googleSignIn.bind(this);
     this.checkCurrUser = this.checkCurrUser.bind(this);
     this._renderLogin = this._renderLogin.bind(this);
     this._renderGo = this._renderGo.bind(this);
@@ -57,29 +55,6 @@ class Login extends Component {
   componentDidMount() {
     console.disableYellowBox = true;
   }
-
-  // handleGoogleLogin() {
-  //   this._googleSignIn();
-  // }
-
-  // async _googleSignIn() {
-  //   try {
-  //     GoogleSignin.signIn()
-  //     .then((user) => {
-  //       const credential = googleAuthProvider.credential(user.idToken);
-  //       console.log('the credential is ', credential);
-  //       auth.signInWithCredential(credential)
-  //       .then(firebaseUser => console.log('logged into firebase ', firebaseUser));
-  //       })
-  //       .catch((err) => {
-  //         console.log("WRONG SIGNIN", err);
-  //       })
-  //       .done();
-  //     }
-  //     catch(err) {
-  //       console.log("Play services error", err.code, err.message);
-  //     }
-  // }
 
   logOut() {
     GoogleSignin.signOut()

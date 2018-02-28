@@ -15,12 +15,11 @@ export const loginGoogleThunk = () => dispatch => {
   try {
     GoogleSignin.signIn()
     .then((user) => {
-      console.log('google user is ', user)
       const credential = googleAuthProvider.credential(user.idToken);
       auth.signInWithCredential(credential)
       .then(firebaseUser => {
-        console.log('firebase user is ', firebaseUser)
-        dispatch(loginUser(firebaseUser))
+        const newUser = {...user, uid: firebaseUser.uid}
+        dispatch(loginUser(newUser))
         });
       })
       .catch((err) => {
