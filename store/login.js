@@ -1,16 +1,36 @@
 import firebase from '../firebase';
 import { GoogleSignin } from 'react-native-google-signin';
+import { auth, googleAuthProvider } from '../firebase';
 
 const LOGIN_GOOGLE = 'LOGIN_GOOGLE';
 
 let user = {};
 
-const loginGoogle = user => {
+const loginUser = user => {
   const action = { type: LOGIN_GOOGLE, user };
   return action;
 }
 
 export const loginGoogleThunk = () => dispatch => {
+  try {
+    GoogleSignin.signIn()
+    .then((user) => {
+      console.log('google user is ', user)
+      const credential = googleAuthProvider.credential(user.idToken);
+      auth.signInWithCredential(credential)
+      .then(firebaseUser => {
+        console.log('firebase user is ', firebaseUser)
+        dispatch(loginUser(firebaseUser))
+        });
+      })
+      .catch((err) => {
+        console.log("WRONG SIGNIN", err);
+      })
+      .done();
+    }
+    catch(err) {
+      console.log("Play services error", err.code, err.message);
+    }
 }
 
 

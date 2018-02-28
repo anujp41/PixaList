@@ -19,14 +19,14 @@ class Login extends Component {
 
   constructor() {
     super();
-    this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
-    this._googleSignIn = this._googleSignIn.bind(this);
+    // this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
+    // this._googleSignIn = this._googleSignIn.bind(this);
     this.checkCurrUser = this.checkCurrUser.bind(this);
     this._renderLogin = this._renderLogin.bind(this);
     this._renderGo = this._renderGo.bind(this);
     this.logOut = this.logOut.bind(this);
     this.state = {
-      user: 'Anuj'
+      user: null
     }
   }
 
@@ -58,38 +58,44 @@ class Login extends Component {
     console.disableYellowBox = true;
   }
 
-  handleGoogleLogin() {
-    this._googleSignIn();
-  }
+  // handleGoogleLogin() {
+  //   this._googleSignIn();
+  // }
 
-  async _googleSignIn() {
-    try {
-      GoogleSignin.signIn()
-      .then((user) => {
-        const credential = googleAuthProvider.credential(user.idToken);
-        console.log('the credential is ', credential);
-        auth.signInWithCredential(credential)
-        .then(firebaseUser => console.log('logged into firebase ', firebaseUser));
-        })
-        .catch((err) => {
-          console.log("WRONG SIGNIN", err);
-        })
-        .done();
-      }
-      catch(err) {
-        console.log("Play services error", err.code, err.message);
-      }
-  }
+  // async _googleSignIn() {
+  //   try {
+  //     GoogleSignin.signIn()
+  //     .then((user) => {
+  //       const credential = googleAuthProvider.credential(user.idToken);
+  //       console.log('the credential is ', credential);
+  //       auth.signInWithCredential(credential)
+  //       .then(firebaseUser => console.log('logged into firebase ', firebaseUser));
+  //       })
+  //       .catch((err) => {
+  //         console.log("WRONG SIGNIN", err);
+  //       })
+  //       .done();
+  //     }
+  //     catch(err) {
+  //       console.log("Play services error", err.code, err.message);
+  //     }
+  // }
 
   logOut() {
     GoogleSignin.signOut()
-    .then(() => auth.signOut())
-    .then(() => console.log('signed out of firebase'))
+    // .then(() => auth.signOut())
+    .then(() => {
+      console.log('signed out of firebase')
+      this.setState({ user: null})
+      auth.signOut()
+      .then(() => console.log('user logged out'))
+      .catch(() => console.log('error logging out user'))
+    })
   }
 
   _renderLogin() {
     return (
-      <TouchableHighlight style={styles.button} underlayColor='#426ed6' onPress={this.handleGoogleLogin}>
+      <TouchableHighlight style={styles.button} underlayColor='#426ed6' onPress={this.props.loginGoogle}>
           <View flexDirection='row'>
             <GoogleSigninButton
               style={{width: 48, height: 48}}
@@ -114,7 +120,7 @@ class Login extends Component {
 
   render() {
     const currUser = this.state.user;
-    console.log('the user is ', currUser)
+    console.log('current user is ', currUser)
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
