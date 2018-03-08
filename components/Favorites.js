@@ -28,7 +28,7 @@ class Favorites extends Component {
   _renderCard({item}) {
     return (
       <Card
-        title={item.id}
+        title={item.tags}
         image={{uri:item.webformatURL}}
         containerStyle={{width: 250}}>
         <TouchableHighlight onPress={() => this.props.removeFave(item)} underlayColor='#ed3d3d' style={styles.icon}>

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { SocialIcon } from 'react-native-elements';
-import { loginGoogleThunk } from '../store';
+import { loginGoogleThunk, setUser } from '../store';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import { auth, googleAuthProvider } from '../firebase';
 
@@ -50,6 +50,7 @@ class Login extends Component {
 
   async checkCurrUser() {
     const user = await GoogleSignin.currentUserAsync();
+    console.log('current user is ', user)
     this.setState({ user });
   }
   
@@ -63,15 +64,15 @@ class Login extends Component {
   }
 
   logOut() {
-    GoogleSignin.signOut()
-    // .then(() => auth.signOut())
-    .then(() => {
-      console.log('signed out of firebase')
-      this.setState({ user: null})
-      auth.signOut()
-      .then(() => console.log('user logged out'))
-      .catch(() => console.log('error logging out user'))
-    })
+    this.props.navigation.navigate('Search');
+    // GoogleSignin.signOut()
+    // .then(() => {
+    //   console.log('signed out of firebase')
+    //   this.setState({ user: null })
+    //   auth.signOut()
+    //   .then(() => console.log('user logged out'))
+    //   .catch(() => console.log('error logging out user'))
+    // })
   }
 
   _renderLogin() {
@@ -101,7 +102,6 @@ class Login extends Component {
 
   render() {
     const currUser = this.state.user;
-    console.log('current user is ', currUser)
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>

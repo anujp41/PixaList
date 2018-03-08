@@ -40,6 +40,7 @@ class Search extends Component {
   }
 
   goToFavorites(user) {
+    console.log('the user is ', user.uid, user)
     this.props.getFaves(user.uid);
     this.props.navigation.navigate('Favorites');
   }

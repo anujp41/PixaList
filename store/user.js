@@ -2,12 +2,12 @@ import firebase from '../firebase';
 import { GoogleSignin } from 'react-native-google-signin';
 import { auth, googleAuthProvider } from '../firebase';
 
-const LOGIN_GOOGLE = 'LOGIN_GOOGLE';
+const SET_USER = 'SET_USER';
 
 let user = {};
 
-const loginUser = user => {
-  const action = { type: LOGIN_GOOGLE, user };
+export const setUser = user => {
+  const action = { type: SET_USER, user };
   return action;
 }
 
@@ -19,7 +19,7 @@ export const loginGoogleThunk = () => dispatch => {
       auth.signInWithCredential(credential)
       .then(firebaseUser => {
         const newUser = {...user, uid: firebaseUser.uid}
-        dispatch(loginUser(newUser))
+        dispatch(setUser(newUser))
         });
       })
       .catch((err) => {
@@ -35,7 +35,7 @@ export const loginGoogleThunk = () => dispatch => {
 
 export default (state = user, action) => {
   switch (action.type) {
-    case LOGIN_GOOGLE:
+    case SET_USER:
       return action.user;
 
     default:
